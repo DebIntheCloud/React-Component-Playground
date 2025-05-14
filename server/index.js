@@ -25,7 +25,7 @@ app.post("/api/rating", (req, res) => {
 });
 
 app.get("/api/ratings", (req, res) => { //this lets you fetch all stored ratings. The frontend can use this to display a list of past submissions, analytics, etc.
-  res.json(ratings);
+  res.json(ratings); //“Hey Express — if you ever receive a GET request at /api/ratings, respond by sending the ratings array as JSON.”
 });
 
 const PORT = 3001;
