@@ -5,7 +5,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const ratings = []; // It’s a temporary in-memory array to store submitted ratings. This could be replaced eventually by a database
+let ratings = []; // It’s a temporary in-memory array to store submitted ratings. This could be replaced eventually by a database
 
 // Root route to handle GET requests to '/'
 app.get("/", (req, res) => {
@@ -26,6 +26,11 @@ app.post("/api/rating", (req, res) => {
 
 app.get("/api/ratings", (req, res) => { //this lets you fetch all stored ratings. The frontend can use this to display a list of past submissions, analytics, etc.
   res.json(ratings); //“Hey Express — if you ever receive a GET request at /api/ratings, respond by sending the ratings array as JSON.”
+});
+
+app.delete("/api/ratings", (req, res) => {
+  ratings = []; // Reassigns the array to be empty
+  res.status(200).json({ message: "Rating history cleared" }); //res.status(200) It tells Postman, the browser, or any client: This DELETE request was successful.”
 });
 
 const PORT = 3001;

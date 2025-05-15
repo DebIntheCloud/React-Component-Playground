@@ -44,6 +44,18 @@ function EmojiRating() {
     }
   };
 
+    const resetHistory = () => { //I’m creating a new function called resetHistory. I’ll run this when the user clicks the Reset button
+      fetch("http://localhost:3001/api/ratings", { //Hey browser, please send a request to my backend, at the /api/ratings route.
+        method: "DELETE", //This request is a DELETE request — I’m not asking for data, I’m telling the backend to delete something.
+      }) //Closing the fetch options. 
+      .then ((res) => res.json()) //Once the server responds, take that response and convert it from a raw HTTP response into a JavaScript object
+      .then(() => { //“After converting the response, now run this code:
+          setHistory([]);// Clear the history on the frontend (in React state). Just make it an empty array
+          setSelectedEmoji(0); //Reset the selected emoji to zero — which means: 'none is selected now.
+      })
+      .catch((err) => console.error("Failed to reset history:", err));
+    }
+
   return (
     <div style={{ textAlign: "center", padding: "2rem" }}>
       <h1>Click an emoji to rate your mood</h1>
@@ -76,6 +88,24 @@ function EmojiRating() {
             You selected: <strong>{selectedEmoji}</strong>
         </p>
     )}
+
+    {/* ✅ Reset Button goes here */}
+    <button
+      onClick={resetHistory}
+      style={{
+        marginTop: "1rem",
+        padding: "0.5rem 1rem",
+        fontSize: "1rem",
+        cursor: "pointer",
+        backgroundColor: "#e74c3c", // red
+        color: "white",
+        border: "none",
+        borderRadius: "5px",
+        marginBottom: "2rem"
+      }}
+    >
+      Reset History
+    </button>
 
     {history.length > 0 && ( //Conditional rendering: && means: If the left side is true, then show/render the right side => Only render this block of JSX if there’s at least one history entry.””
         <div style={{ marginTop: "2rem" }}>
